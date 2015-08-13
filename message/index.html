@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="../js/mui.min.js"></script>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<button class="mui-btn mui-btn-link mui-btn-nav mui-pull-right"><span class="wb-color-orange">发起聊天</span></button>
+		<h1 id="title" class="mui-title">消息</h1>
+	</header>
+	<!--下拉刷新容器-->
+	<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll wb-margin-stick">
+			<!--数据列表-->
+			<ul class="mui-table-view wb-margin-stick">
+				<li class="mui-table-view-cell mui-media wb-padding-stick">
+					<div class="wb-cell-padding" style="padding: 8px 9px;">
+						<a class="mui-navigate-right"></a>
+						<img class="mui-media-object mui-pull-left" src="../images/muwu.jpg">
+						<div class="mui-media-body" style="line-height: 40px;">
+							<span class="wb-fs-14"><strong>@我的</strong></span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media wb-padding-stick">
+					<div class="wb-cell-padding" style="padding: 8px 9px;">
+						<a class="mui-navigate-right"></a>
+						<img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
+						<div class="mui-media-body" style="line-height: 40px;">
+							<span class="wb-fs-14"><strong>评论</strong></span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media wb-padding-stick">
+					<div style="padding: 8px 9px;">
+						<a class="mui-navigate-right"></a>
+						<img class="mui-media-object mui-pull-left" src="../images/yuantiao.jpg">
+						<div class="mui-media-body" style="line-height: 40px;">
+							<span class="wb-fs-14"><strong>赞</strong></span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media wb-padding-stick">
+					<div style="padding: 8px 9px;">
+						<span class="mui-media-object mui-pull-right wb-status-tip">3-16</span>
+						<img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14"><strong>幸福1</strong></span>
+							<p class='mui-ellipsis wb-status-tip'>帮助认证通知</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script>
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//下拉刷新，新纪录插到最前面；
+						//table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 20; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//table.appendChild(li);
+					}
+				}, 1500);
+			}
+		</script>
+</body>
+</html>

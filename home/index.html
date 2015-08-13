@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <script src="../js/mui.min.js"></script>
+    <script type="text/javascript" src="../js/common.js" ></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<button id="addUserBtn" class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-personadd"></span>			
+		</button>
+		<button id="rightBtn" class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-right">
+			<span class="mui-icon mui-icon-weibo"></span>			
+		</button>		
+		<h1 id="title" class="mui-title">首页</h1>
+	</header>
+	
+	<script>
+		var _userView = null;
+		var embed=null;
+		function plusReady() {
+			embed = mui.preload({
+			    url:"index_content.html",
+			    id:"",//默认使用当前页面的url作为id
+			    styles:{
+					top: "46px",
+					bottom: "0px",
+					background:'transparent',
+					scrollIndicator:'none'
+				},//窗口参数
+			    extras:{}//自定义扩展参数
+			});
+			embed.onloaded = function(){
+				plus.navigator.closeSplashscreen();
+				embed.evalJS('loadData()');
+			}
+			plus.webview.currentWebview().append(embed);
+			
+			_userView = mui.preload({
+			    url:"users.html",
+			    id:"",//默认使用当前页面的url作为id
+			    styles:{scrollIndicator:'none',scalable:false,popGesture:'hide'},//窗口参数
+			    extras:{}//自定义扩展参数
+			});
+		}
+		if (window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+		
+		var as = 'slide-in-right';
+		var at = 300;
+		document.getElementById("addUserBtn").addEventListener('tap',function(){
+			_userView.show(as,at);
+			_userView.evalJS('loadData()');
+		});
+		
+		document.getElementById("rightBtn").addEventListener("tap",function(){
+			embed.evalJS('mui("#topPopover").popover("toggle")');
+		});
+	</script>
+</body>
+</html>

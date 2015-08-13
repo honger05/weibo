@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../css/mui.min.css" rel="stylesheet"/>
+    		<link href="../css/style.css" rel="stylesheet"/>
+    		<script src="../js/mui.min.js"></script>
+    		<script type="text/javascript" src="../js/common.js" ></script>
+		
+		<script>
+			var embed=null;
+			// H5 plus事件处理
+			function plusReady() {
+				embed = initContent("index_content.html",null,null,null);
+			}
+			
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<button class="mui-btn mui-btn-link mui-btn-nav mui-pull-right"><span class="wb-color-orange">设置</span></button>
+			<h1 class="mui-title">我</h1>
+		</header>
+	</body>
+</html>

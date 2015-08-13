@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <script src="../js/mui.min.js"></script>
+    
+</head>
+<body>
+	<!--下拉刷新容器-->
+	<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll wb-margin-stick">
+			<!--数据列表-->
+			<ul id="dataTable" class="mui-table-view mui-table-view-chevron wb-margin-stick">
+				<li class="mui-table-view-divider divider-noborder"></li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14">幸福1</span>
+							<p class='mui-ellipsis wb-status-tip'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14">幸福1</span>
+							<p class='mui-ellipsis wb-status-tip'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14">幸福1</span>
+							<p class='mui-ellipsis wb-status-tip'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14">幸福1</span>
+							<p class='mui-ellipsis wb-status-tip'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							<span class="wb-fs-14">幸福1</span>
+							<p class='mui-ellipsis wb-status-tip'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+	<script>
+		//模拟ajax数据   此处只是模拟数据,第二次进入会先隐藏数据出现切屏现象
+		function loadData(){
+			document.getElementById("dataTable").style.display = "none";
+			var sw = plus.nativeUI.showWaiting();
+			setTimeout(function() {
+				document.getElementById("dataTable").style.display = "block";
+				plus.nativeUI.closeWaiting();
+			}, 2000);
+		}
+		
+		
+		function plusReady() {
+			document.getElementById("dataTable").style.display = "none";
+		}
+		if (window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}
+		document.addEventListener('touchstart',function(){
+				return false;
+		},true);
+		
+//		var ws = null;
+//		function plusReady() {
+//				//plus.webview.currentWebview().children()[0].setStyle({scrollIndicator:'none',background:'#abc123'});
+//				ws = plus.webview.currentWebview();
+//				ws.setStyle({"background":"transparent"})
+//				ws.setPullToRefresh({
+//					support: true,
+//					height: "50px",
+//					range: "100px",
+//					contentdown: { caption: "下拉可以刷新"},
+//					contentover: { caption: "释放立即刷新"},
+//					contentrefresh: { caption: "正在刷新..."}
+//				}, function() {
+//					setTimeout(function() {
+//						ws.endPullToRefresh();
+//					}, 2000);
+//				});
+//				//plus.nativeUI.toast("下拉可以刷新");
+//			}
+//			// 判断扩展API是否准备，否则监听"plusready"事件
+//			if (window.plus) {
+//				plusReady();
+//			} else {
+//				document.addEventListener("plusready", plusReady, false);
+//			}
+//			document.addEventListener('touchstart',function(){
+//  				return false;
+//			},true);
+			/*function plusReady(){
+				plus.webview.currentWebview().setStyle({scrollIndicator:'none'});
+			}
+			if(window.plus){
+				plusReady();
+			}else{
+				document.addEventListener('plusready',plusReady,false);
+			}*/
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						contentrefresh: '<a href="#">正在加载...</a>',
+						callback: pulldownRefresh
+					}
+				}
+				
+			});
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//下拉刷新，新纪录插到最前面；
+						//table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			
+			
+	</script>
+</body>
+</html>

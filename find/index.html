@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <script src="../js/mui.min.js"></script>
+    <script type="text/javascript" src="../js/common.js" ></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<div class="mui-input-row mui-search" style="padding: 0px;margin: 0px;left:0px;">
+			<input type="search" class="mui-input-clear" placeholder="大家都在搜：">
+		</div>
+	</header>
+	<script>
+		var embed=null;
+		function plusReady() {
+			embed = initContent("index_content.html",null,null,null);
+			
+		}
+		if (window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", plusReady, false);
+		}		
+	</script>
+</body>
+</html>
